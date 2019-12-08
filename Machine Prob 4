@@ -1,0 +1,46 @@
+yo=input('What is the initial height of the projectile above the ground? (in meters) ');
+vo=input('What is the magnitude of the velocity in m/s? ');
+theta=input('What is the angle with respect to the +x-axis which the projectile was fired? (in degrees) ');
+ax=input('What is the x-component of the acceleration, considering the sign? (in m/s/s) ');
+ay=input('What is the y-component of the acceleration, considering the sign? (in m/s/s) ');
+
+if ay==0
+    msg='Y-component of the acceleration must not be 0.';
+    error(msg)
+else
+    
+    vox=vo*cosd(theta); %x-component of velocity
+    voy=vo*sind(theta); %y-component of velocity
+
+    if yo==0
+    
+        t=(2*vo*sind(theta))/abs(ay);    %time it takes to land on the final point and on the same level of the initial point
+        tot=[0:1/50:t]; %time interval from 0 to t
+        y=(voy.*tot)+(0.5.*ay.*tot.^2); %height from ho to y
+        x=(vox.*tot)+(0.5.*ax.*tot.^2);
+        plot(x,y)
+        grid on
+        xlim([0 inf])
+        ylim([0 inf])
+        title('Graph of the Trajectory')
+        xlabel('Range Values')
+        ylabel('Height Values')
+    
+    else
+    
+        yf=(vo^2*(sind(theta))^2)/2*abs(ay); %maximum height
+        t=(-voy+sqrt(voy^2 - 4*0.5*abs(ay)*(yo-yf)))/abs(ay);   %quadratic formula to find time it takes to reach maximum height from the formula, y=yo+voy*t+0.5*abs(ay)*t^2
+        tot=[0:1/50:t];
+        y=yo+(voy.*tot)+(0.5.*ay.*tot.^2); %height from ho to y
+        x=(vox.*tot)+(0.5.*ax.*tot.^2); %range of non-ideal projectile
+        plot(x,y)
+        grid on
+        xlim([0 inf])
+        ylim([0 inf])
+        title('Graph of the Trajectory')
+        xlabel('Range Values')
+        ylabel('Height Values')
+    
+    end
+
+end
